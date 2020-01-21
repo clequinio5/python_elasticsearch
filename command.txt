@@ -1,0 +1,34 @@
+fscrawler cvtheque
+
+C:\Users\clequinio\.fscrawler\cvtheque\_settings.yaml
+
+./fscrawler.bat cvs --loop 1 --restart
+
+GET cvtheque/_search
+{
+  "_source": [
+    "file.url"
+  ],
+  "query": {
+    "query_string": {
+      "query" : "(new york city) OR (big apple)",
+      "default_field" : "content"
+    }
+  },
+  "highlight": {
+    "fields": {
+      "content": {
+        "fragment_size": 100,
+        "number_of_fragments": 3
+      }
+    }
+  }
+}
+
+curl -XDELETE "http://192.168.0.112:9200/cvs"
+
+curl -X GET "http://192.168.0.112:9200/cvs/_search"
+
+http://192.168.0.112:9200/cvs/_mapping
+
+./fscrawler.bat cvs --config_dir C:\Users\clequinio\Documents\fscrawler-es7-2.7 --loop 1 --restart
